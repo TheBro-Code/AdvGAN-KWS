@@ -240,7 +240,7 @@ class SpeechDataset(data.Dataset):
         config["noise_prob"] = 0.8
         config["n_dct_filters"] = 40
         config["input_length"] = 16000
-        config["n_mels"] = 40
+        config["n_mels"] = 128
         config["timeshift_ms"] = 100
         config["unknown_prob"] = 0.1
         config["train_pct"] = 80
@@ -260,7 +260,7 @@ class SpeechDataset(data.Dataset):
                 audio_tensor = F.pad(audio_tensor,(0,0,0,128-audio_tensor.shape[1]))
                 x = audio_tensor if x is None else torch.cat((x, audio_tensor), 0)
             elif self.audio_preprocess_type == "Mel-Spectrogram":
-                audio_tensor = torch.from_numpy(self.audio_processor.compute_mfccs(audio_data).reshape(1, 101, 40))
+                audio_tensor = torch.from_numpy(self.audio_processor.compute_mel_spectrogram(audio_data).reshape(1, 101, 128))
                 audio_tensor = F.pad(audio_tensor,(0,0,0,128-audio_tensor.shape[1]))
                 x = audio_tensor if x is None else torch.cat((x, audio_tensor), 0)
             elif self.audio_preprocess_type == "PCEN":

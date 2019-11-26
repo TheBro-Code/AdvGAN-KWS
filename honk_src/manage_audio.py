@@ -16,7 +16,7 @@ def set_speech_format(f):
     f.setframerate(16000)
 
 class AudioPreprocessor(object):
-    def __init__(self, sr=16000, n_dct_filters=40, n_mels=40, f_max=4000, f_min=20, n_fft=480, hop_ms=10):
+    def __init__(self, sr=16000, n_dct_filters=40, n_mels=128, f_max=4000, f_min=20, n_fft=480, hop_ms=10):
         super().__init__()
         self.n_mels = n_mels
         self.dct_filters = np.load('dct_filter.npy')
@@ -37,7 +37,7 @@ class AudioPreprocessor(object):
             fmin=self.f_min,
             fmax=self.f_max)
         data[data > 0] = np.log(data[data > 0])
-        data = [np.matmul(self.dct_filters.T, x) for x in np.split(data, data.shape[1], axis=1)]
+        data = [np.matmul(self.dct_filters, x) for x in np.split(data, data.shape[1], axis=1)]
         data = np.array(data, order="F").astype(np.float32)
         return data
 
