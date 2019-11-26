@@ -104,8 +104,6 @@ def train(config):
     sched_idx = 0
     criterion = nn.CrossEntropyLoss()
     max_acc = 0
-    print(summary(model,(128,40)))
-    print(config["output_file"])
     train_loader = data.DataLoader(
         train_set,
         batch_size=config["batch_size"],
@@ -184,7 +182,6 @@ def main():
     config = builder.config_from_argparse(parser)
     config["model_class"] = mod_cls
     set_seed(config)
-    print(config)
     if config["type"] == "train":
         train(config)
     elif config["type"] == "eval":

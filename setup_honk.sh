@@ -9,7 +9,7 @@ cp ../honk_src/* utils/
 cp ../dct_filter.npy ./
 python -m utils.train \
 --audio_preprocess_type MFCCs\
---data_folder	/content/speech_commands \
+--data_folder	../data \
 --gpu_no 0 \
 --wanted_words yes no marvin left right \
 --n_labels 7 \
