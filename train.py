@@ -16,23 +16,21 @@ else:
 def train(args):
     config = SpeechDataset.default_config()
     config["wanted_words"] = "yes no marvin left right".split()
-    config["data_folder"] = "/content/data"
+    config["data_folder"] = "data"
     config["cache_size"] = 32768
     config["batch_size"] = 64
     train_set, dev_set, test_set = SpeechDataset.splits(config)
 
-    train_loader = data.DataLoader(
-        train_set,
+    train_loader = data.DataLoader(train_set,
         batch_size=config["batch_size"],
-        shuffle=True, drop_last=True,
+        shuffle=True,
+        drop_last=True,
         collate_fn=train_set.collate_fn)
-    dev_loader = data.DataLoader(
-        dev_set,
+    dev_loader = data.DataLoader(dev_set,
         batch_size=min(len(dev_set), 16),
         shuffle=True,
         collate_fn=dev_set.collate_fn)
-    test_loader = data.DataLoader(
-        test_set,
+    test_loader = data.DataLoader(test_set,
         batch_size=min(len(test_set), 16),
         shuffle=True,
         collate_fn=test_set.collate_fn)
@@ -52,15 +50,15 @@ def train(args):
         optim_gen.load_state_dict(weights_dict['optim_gen_state_dict'])
         optim_disc.load_state_dict(weights_dict['optim_disc_state_dict'])
     else:
-         gen_state_dict = gen.state_dict()
-         for key in gen_state_dict.keys():
-             if gen_state_dict[key].dim() >= 2:
-                 torch.nn.init.xavier_normal_(gen_state_dict[key],1e-2)
-             else:
-                 if key[-4:] == 'bias':
-                     torch.nn.init.zeros_(gen_state_dict[key])
-                 else:
-                     torch.nn.init.ones_(gen_state_dict[key])
+        gen_state_dict = gen.state_dict()
+        for key in gen_state_dict.keys():
+            if gen_state_dict[key].dim() >= 2:
+                torch.nn.init.xavier_normal_(gen_state_dict[key],1e-2)
+            else:
+                if key[-4:] == 'bias':
+                    torch.nn.init.zeros_(gen_state_dict[key])
+                else:
+                    torch.nn.init.ones_(gen_state_dict[key])
         gen.load_state_dict(gen_state_dict)
 
     model_config = dict(dropout_prob=0.5, height=128, width=40, n_labels=7, n_feature_maps1=64,
@@ -73,7 +71,7 @@ def train(args):
     if torch.cuda.is_available():
         dct_filters = dct_filters.cuda()
 
-    num_epochs = args.epochs
+    num_epochs = args.num_epochs
     c = args.c
     alpha = args.alpha
     beta = args.beta
