@@ -1,6 +1,6 @@
 chainmap
 cherrypy>=11.0.0,<=11.99
-librosa
+librosa==0.7.1
 Flask>=0.12.1
 numpy>=1.12
 Pillow>=4.0.0,<=4.99
@@ -13,6 +13,6 @@ SpeechRecognition==3.7.1
 git+https://github.com/daemon/pytorch-pcen
 torchaudio
 onnx
-onnx_coffe2
+onnx_caffe2
 torchsummary
 torchvision
