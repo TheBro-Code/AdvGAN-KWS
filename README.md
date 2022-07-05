@@ -1,5 +1,5 @@
 # AdvGAN-KWS
-Generating Adversarial Examples for KWS systems using GANs
+Generating Adversarial Examples for KWS systems using GANs. Course Project for CS753 Automatic Speech Recognition
 
 ![Page1](docs/Report/CS753_Project_Report_page-0001.jpg)
 ![Page2](docs/Report/CS753_Project_Report_page-0002.jpg)
